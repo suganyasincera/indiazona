@@ -1,0 +1,138 @@
+/* Basic styles for the homepage */
+.homepage {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Header styling */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo {
+    height: 50px;
+  }
+  
+  .header-img {
+    margin-left: 10px;
+    height: 50px;
+  }
+  
+  .header-middle {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar {
+    width: 300px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .search-button {
+    margin-left: 10px;
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .auth-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .auth-button {
+    padding: 10px 20px;
+    background-color: #ff6f00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .social-link {
+    margin-right: 20px;
+  }
+  
+  /* Vendor section */
+  .vendor-registration {
+    background-color: #e0f7fa;
+    padding: 40px;
+    text-align: center;
+  }
+  
+  .vendor-info h1 {
+    color: #007bff;
+    font-size: 2rem;
+  }
+  
+  .vendor-info p {
+    color: #555;
+  }
+  
+  .become-seller {
+    padding: 10px 30px;
+    background-color: #ff6f00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 1.2rem;
+  }
+  
+  /* Products section */
+  .products {
+    display: flex;
+    justify-content: space-around;
+    padding: 40px;
+    background-color: #f5f5f5;
+  }
+  
+  .product-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-card img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 20px;
+  }
+  
+  .shop-now {
+    display: block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  
+  .shop-now:hover {
+    background-color: #218838;
+  }
+  
+  /* Footer */
+  footer {
+    padding: 20px;
+    text-align: center;
+    background-color: #007bff;
+    color: white;
+  }
+  
