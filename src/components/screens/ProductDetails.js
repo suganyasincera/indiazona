@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Addtobuynow, clearBuyNow } from '../redux/formslice';
+import { Addtobuynow, clearBuyNow,Addtocart } from '../redux/formslice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import Font Awesome
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'; // Import the back arrow icon
-
-const BuyNow = () => {
+import './ProductDetails.css';
+import Swal from 'sweetalert2'; 
+import { useLocation } from 'react-router-dom';
+const ProductDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const buynow = useSelector((state) => state.form.addtobuynow);
@@ -28,29 +30,38 @@ const BuyNow = () => {
     setQuantityById(initialQuantities);
     setTotal(initialTotal);
   }, [buynow]);
+  const location = useLocation();
+  const { product } = location.state || {}; // Access product data
+
+  if (!product) {
+    return <div>No Product Details Found</div>;
+  }
 
   const handleQuantityChange = (id, operation) => {
-    setQuantityById((prev) => {
-      const newQuantities = { ...prev };
+    setQuantityById((prevQuantities) => {
+      const updatedQuantities = { ...prevQuantities };
+      
       if (operation === 'increment') {
-        newQuantities[id] += 1; // Increment the quantity
-      } else if (operation === 'decrement' && newQuantities[id] > 1) {
-        newQuantities[id] -= 1; // Decrement the quantity only if it's above 1
+        updatedQuantities[id] = (updatedQuantities[id] || 1) + 1;
+      } else if (operation === 'decrement' && (updatedQuantities[id] || 1) > 1) {
+        updatedQuantities[id] -= 1;
       }
-      updateTotal(newQuantities);
-      return newQuantities;
+  
+      // Call updateTotal after updating the quantity
+      updateTotal(updatedQuantities);
+      
+      return updatedQuantities; // Update state with new quantities
     });
   };
-
   const updateTotal = (quantities) => {
     let newTotal = 0;
-
+  
     buynow.forEach((item) => {
       const quantity = quantities[item.id] || 1;
       const price = parseFloat(item.price) || 0;
       newTotal += price * quantity;
     });
-
+  
     setTotal(newTotal);
   };
 
@@ -70,24 +81,45 @@ const BuyNow = () => {
     dispatch(clearBuyNow());
     navigate("/ListofProducts");
   };
+  const handleAddToCart = (product) => {
+    dispatch(Addtocart(product));
+    
+    // Trigger SweetAlert after adding to cart
+    Swal.fire({
+      title: 'Added to Cart!',
+      text: `${product.name} has been added to your cart.`,
+      icon: 'success',
+      confirmButtonText: 'Continue Shopping'
+    });
+  };
 
+  // Handlers
+  const handleBuy = (product) => {
+    dispatch(Addtobuynow({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity:1
+    }));
+    navigate('/BuyNow');
+  };
   return (
     <Container>
       <BackButton onClick={handleBack}>
         <FontAwesomeIcon icon={faArrowLeft} /> Back
       </BackButton>
-      {buynow.length > 0 ? (
-        buynow.map((buyno) => (
-          <ProductSection key={buyno.id}>
+      
+          <ProductSection >
             <ImageGallery>
-              <MainImage src={buyno.image} />
+              <MainImage src={product.image} />
             </ImageGallery>
 
-            <ProductDetails>
-              <ProductName>{buyno.name}</ProductName>
-              <Price>${(parseFloat(buyno.price) * (quantityById[buyno.id] || 1)).toFixed(2)}</Price>
-              <OldPrice>{buyno.OldPrice}</OldPrice>
-              <Rating>⭐⭐⭐⭐⭐ ({buyno.reviews} reviews)</Rating>
+            <ProductDetail>
+              <ProductName>{product.name}</ProductName>
+              <Price>${(parseFloat(product.price) * (quantityById[product.id] || 1)).toFixed(2)}</Price>
+              <OldPrice>{product.OldPrice}</OldPrice>
+              <Rating>⭐⭐⭐⭐⭐ ({product.reviews} reviews)</Rating>
               <Description>Made in India</Description>
 
               <Label>Color:</Label>
@@ -127,24 +159,23 @@ const BuyNow = () => {
               </SizeOptions>
 
               {/* Quantity Section */}
-              <QuantitySection>
-                <QuantityButton onClick={() => handleQuantityChange(buyno.id, 'decrement')}>-</QuantityButton>
-                <QuantityDisplay>{quantityById[buyno.id]}</QuantityDisplay>
-                <QuantityButton onClick={() => handleQuantityChange(buyno.id, 'increment')}>+</QuantityButton>
-              </QuantitySection>
+              {/* <QuantitySection>
+                <QuantityButton onClick={() => handleQuantityChange(product.id, 'decrement')}>-</QuantityButton>
+                <QuantityDisplay>{quantityById[product.id]||1}</QuantityDisplay>
+                <QuantityButton onClick={() => handleQuantityChange(product.id, 'increment')}>+</QuantityButton>
+              </QuantitySection> */}
 
-              <Button onClick={() => handleContinue(buyno)}>Continue</Button>
-
+<ButtonRow>
+    <Button onClick={() => handleBuy(product)}>Buy Now</Button>
+    <Button onClick={() => handleAddToCart(product)}>Add to Cart</Button>
+  </ButtonRow>
               <DeliveryInfo>
                 <FreeDelivery>Free delivery available</FreeDelivery>
                 <ReturnDelivery>Return delivery within 30 days</ReturnDelivery>
               </DeliveryInfo>
-            </ProductDetails>
+            </ProductDetail>
           </ProductSection>
-        ))
-      ) : (
-        <p>No items in the Buy Now section.</p>
-      )}
+
 
       <Footer>
         <FooterLinks>
@@ -168,7 +199,7 @@ const BuyNow = () => {
   );
 };
 
-export default BuyNow;
+export default ProductDetails;
 
 
 
@@ -196,6 +227,27 @@ const BackButton = styled.button`
     margin-right: 8px;
   }
 `;
+// Styled-components for the row container
+const ButtonRow = styled.div`
+  display: flex;
+  gap: 10px; /* Adjusts space between the buttons */
+  margin-bottom: 20px;
+`;
+
+// Update Button styling to make them align nicely within the row
+const Button = styled.button`
+  flex: 1;
+  padding: 15px;
+  background-color: #218838;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: #ff6347;
+  }
+`;
 
 const ProductSection = styled.div`
   display: flex;
@@ -211,7 +263,7 @@ const MainImage = styled.img`
   border-radius: 10px;
 `;
 
-const ProductDetails = styled.div`
+const ProductDetail = styled.div`
   width: 55%;
 `;
 
@@ -298,20 +350,20 @@ const QuantityDisplay = styled.span`
   font-size: 18px;
 `;
 
-const Button = styled.button`
-  width: 100%;
-  padding: 15px;
-  background-color: #218838;
-  color: white;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-bottom: 20px;
-  &:hover {
-    background-color: #ff6347;
-  }
-`;
+// const Button = styled.button`
+//   width: 100%;
+//   padding: 15px;
+//   background-color: #218838;
+//   color: white;
+//   font-size: 16px;
+//   border: none;
+//   border-radius: 5px;
+//   cursor: pointer;
+//   margin-bottom: 20px;
+//   &:hover {
+//     background-color: #ff6347;
+//   }
+
 
 const DeliveryInfo = styled.div`
   font-size: 14px;
