@@ -1,0 +1,100 @@
+/* General Form Container Styling */
+.register-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.register-form-header {
+  text-align: center;
+}
+
+.logo {
+  width: 200px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Form Group Styling */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  padding-right: 40px; /* Adds space for the eye icon */
+}
+
+.error-text {
+  color: red;
+  font-size: 12px;
+}
+
+.info-text {
+  font-size: 12px;
+  color: gray;
+}
+
+/* Eye Icon Styling */
+.password-field {
+  position: relative;
+  align-content:flex-end;
+  align-items: flex-end;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-10%);
+  cursor: pointer;
+}
+
+.toggle-password svg {
+  font-size: 1.2rem;
+  color: #888; /* Adjust icon color */
+}
+
+/* Submit Button Styling */
+.submit-button {
+  background-color: orange;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+.submit-button:hover {
+  background-color: darkorange;
+}
+
+/* Back Button Styling */
+.back-button {
+  background-color: #6c757d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.back-button:hover {
+  background-color: #5a6268;
+}

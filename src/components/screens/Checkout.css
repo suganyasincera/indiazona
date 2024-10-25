@@ -1,0 +1,150 @@
+.checkout-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #d8ddda;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  .checkout-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 20px;
+  }
+  
+  .billing-details {
+    width: 60%;
+  }
+  
+  .billing-details h2 {
+    margin-bottom: 15px;
+  }
+  
+  .billing-details input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  .billing-details label {
+    display: block;
+    margin-top: 10px;
+  }
+  
+  .cart-summary {
+    flex: 1;
+    width: 15%;
+    border: 1px solid #ddd;
+    padding: 20px;
+  }
+  
+  .cart-item {
+    display: inline-flex;
+    justify-content: space-between; /* Ensures space between name and price */
+    align-items: center;
+    /* margin-bottom: 10px; */
+  }
+  
+  .cart-item p {
+    margin: 0 100px; /* Adds some space around the text */
+  }
+  
+.product-image {
+    justify-content: space-between !important;
+        width: 100px !important; /* Set the desired width */
+        height: 100px !important; /* Set the desired height */
+        object-fit: contain !important; /* Ensure the image retains its aspect ratio */
+      }
+      
+  
+  .cart-totals p {
+    margin: 10px 0;
+  }
+  
+  .payment-method label {
+    display: block;
+    margin-top: 10px;
+  }
+  
+  .apply-coupon {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 0;
+    width: 100%;
+  }
+  
+  .place-order {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+  }
+  
+  .footer-info {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .footer-column {
+    width: 30%;
+  }
+  .checkout-page {
+    padding: 20px;
+  }
+  
+  .checkout-content {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .billing-details {
+    flex: 1;
+    margin-right: 20px;
+  }
+
+  
+  
+  
+  .payment-method {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .checkout-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .apply-coupon, .place-order {
+    padding: 10px 10px;
+    cursor: pointer;
+  }
+  
+  /* Checkbox and label alignment */
+  .save-info-container {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  /* .save-info-container span {
+    margin-left: 5px;
+  } */
+  
